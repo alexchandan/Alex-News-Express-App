@@ -11,8 +11,8 @@ import {
 
 export default class App extends Component {
   render() {
-    const pageSize = 5;
-    const apiKey = "c37e2ef951bf4f0caf7edba576d573eb"
+    const pageSize = 8;
+    const apiKey = "681e3d20cc464b9e9cc5e5a0c6e8efc4"
     let country = 'in';
     // let category = 'sports';
     let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}&pageSize=${pageSize}`
