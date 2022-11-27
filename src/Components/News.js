@@ -1,65 +1,49 @@
 import React, { Component } from 'react'
 import NewsItems from './NewsItems'
 import Loading from './Loading';
-
 export class News extends Component {
+
     articles = [];
     constructor() {
         super();
         this.state = {
             articles: this.articles,
             loading: false,
-            page: 1,
-            totalResults: this.totalResults
+            page: 1
         }
     }
-
-    async componentDidMount() {
-        let url = `${this.props.url}&page=1`
+    async newsUpdate() {
+        let url = `${this.props.url}&country=${this.props.country}&category=${this.props.category}&page=${this.state.page}`;
         this.setState({ loading: true })
         let data = await fetch(url);
         let parsedData = await data.json();
         this.setState({
             articles: parsedData.articles,
             loading: false,
-            totalResults: parsedData.totalResults
+            totalResults: parsedData.totalResults,
         })
+    }
+    async componentDidMount() {
+        this.newsUpdate();
 
     }
 
     nextBtnHandler = async () => {
-        let url = `${this.props.url}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
-        this.setState({ loading: true })
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        this.setState({
-            page: this.state.page + 1,
-            articles: parsedData.articles,
-            loading: false
-        })
-        if (this.state.page + 1 === 2) {
-            console.log("page2")
-        }
+        this.setState({ page: this.state.page + 1 })
+        this.newsUpdate();
     }
 
     previousBtnHandler = async () => {
-        let url = `${this.props.url}&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
-        this.setState({ loading: true })
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        this.setState({
-            page: this.state.page - 1,
-            articles: parsedData.articles,
-            loading: false
-        })
+        this.setState({ page: this.state.page - 1 })
+        this.newsUpdate();
 
     }
     render() {
         return (
-            <div className="container my-3 pd-4">
+            <div className="container my-3">
                 <h2 className='text-center'>NewsMonkey - Top Headlines</h2>
                 {this.state.loading && <Loading />}
-                <div className="row rounded-4" style={{ backgroundColor: '#e5e5e5' }} >
+                <div className="row rounded-4" >
                     <div className="row">
                         {this.state.articles.map((element) => {
                             return <div className="col" key={element.url}>
@@ -72,7 +56,7 @@ export class News extends Component {
                         <button type="button" disabled={this.state.page + 1 >= Math.ceil(this.state.totalResults / this.props.pageSize)} className="btn btn-success" onClick={this.nextBtnHandler}>Next &rarr;</button>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
