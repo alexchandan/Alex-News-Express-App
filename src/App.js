@@ -20,10 +20,9 @@ export default class App extends Component {
     this.setState({ progress: progress })
   }
   render() {
-    const pageSize = 8;
-    const apiKey = "3d10c86a0b4a4c37bff1191c79aa6ae1"
+    const pageSize = 6;
+    const apiKey = "2f37214f41cc4da8ab2fbb84ca2e748f"
     let country = 'in';
-    // let category = 'sports';
     let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}&pageSize=${pageSize}`
     return (
       <BrowserRouter>

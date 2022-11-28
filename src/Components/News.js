@@ -56,25 +56,27 @@ export class News extends Component {
     render() {
         return (
             <>
-                <h2 className='text-center mt-3'>Alex News Express - Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h2>
-                {this.state.loading && <Loading />}
-                <InfiniteScroll
-                    dataLength={this.state.articles.length}
-                    next={this.fetchMoreData}
-                    hasMore={this.state.articles.length !== this.state.totalResults}
-                    loader={<Loading />}
-                >
-                    <div className="container ">
-                        <div className="row " >
-                            {/* <div className="col-12 col-md-6 col-lg-4 my-3"> */}
-                            {this.state.articles.map((element) => {
-                                return <div className='col-md-4' key={element.url}>
-                                    <NewsItems title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url} publishedAt={element.publishedAt} author={element.author} source={element.source.name} />
-                                </div>
-                            })}
+                <div className="container">
+                    <h2 className='text-center mt-3'>Alex News Express - Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h2>
+                    {this.state.loading && <Loading />}
+                    <InfiniteScroll
+                        dataLength={this.state.articles.length}
+                        next={this.fetchMoreData}
+                        hasMore={this.state.articles.length !== this.state.totalResults}
+                        loader={<Loading />}
+                    >
+                        <div className="container ">
+                            <div className="row " >
+                                {/* <div className="col-12 col-md-6 col-lg-4 my-3"> */}
+                                {this.state.articles.map((element) => {
+                                    return <div className='col-md-4' key={element.url}>
+                                        <NewsItems title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url} publishedAt={element.publishedAt} author={element.author} source={element.source.name} />
+                                    </div>
+                                })}
+                            </div>
                         </div>
-                    </div>
-                </InfiniteScroll>
+                    </InfiniteScroll>
+                </div>
             </>
         )
     }
