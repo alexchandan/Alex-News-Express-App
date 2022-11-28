@@ -1,6 +1,5 @@
 import './App.css';
-
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import NavBar from './Components/NavBar';
 import News from './Components/News';
 import {
@@ -10,47 +9,39 @@ import {
 } from "react-router-dom";
 import LoadingBar from 'react-top-loading-bar'
 
-export default class App extends Component {
+export default function App() {
+  let [progress, setProgress] = useState(0)
+  const pageSize = 6;
+  const apiKey = process.env.REACT_APP_NEWS_API
+  let country = 'in';
+  let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}&pageSize=${pageSize}`
+  return (
+    <BrowserRouter>
+      <NavBar />
+      <LoadingBar
+        color='#f11946'
+        progress={progress}
+      />
+      <Routes>
+        <Route exact path='/' element={<News setProgress={setProgress} key="general" url={url} pageSize={pageSize} country={country} category="general" />} />
 
-  state = {
-    progress: 0
-  }
+        <Route exact path='/health' element={<News setProgress={setProgress} key="health" url={url} pageSize={pageSize} country={country} category="health" />} />
 
-  setProgress = (progress) => {
-    this.setState({ progress: progress })
-  }
-  render() {
-    const pageSize = 6;
-    const apiKey = process.env.REACT_APP_NEWS_API
-    let country = 'in';
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}&pageSize=${pageSize}`
-    return (
-      <BrowserRouter>
-        <NavBar />
-        <LoadingBar
-          color='#f11946'
-          progress={this.state.progress}
-        />
-        <Routes>
-          <Route exact path='/' element={<News setProgress={this.setProgress} key="general" url={url} pageSize={pageSize} country={country} category="general" />} />
+        <Route exact path='/business' element={<News setProgress={setProgress} key="business" url={url} pageSize={pageSize} country={country} category="business" />} />
 
-          <Route exact path='/health' element={<News setProgress={this.setProgress} key="health" url={url} pageSize={pageSize} country={country} category="health" />} />
+        <Route exact path='/entertainment' element={<News setProgress={setProgress} key="entertainment" url={url} pageSize={pageSize} country={country} category="entertainment" />} />
 
-          <Route exact path='/business' element={<News setProgress={this.setProgress} key="business" url={url} pageSize={pageSize} country={country} category="business" />} />
+        <Route exact path='/general' element={<News setProgress={setProgress} key="general" url={url} pageSize={pageSize} country={country} category="general" />} />
 
-          <Route exact path='/entertainment' element={<News setProgress={this.setProgress} key="entertainment" url={url} pageSize={pageSize} country={country} category="entertainment" />} />
+        <Route exact path='/science' element={<News setProgress={setProgress} key="science" url={url} pageSize={pageSize} country={country} category="science" />} />
 
-          <Route exact path='/general' element={<News setProgress={this.setProgress} key="general" url={url} pageSize={pageSize} country={country} category="general" />} />
+        <Route exact path='/sports' element={<News setProgress={setProgress} key="sports" url={url} pageSize={pageSize} country={country} category="sports" />} />
 
-          <Route exact path='/science' element={<News setProgress={this.setProgress} key="science" url={url} pageSize={pageSize} country={country} category="science" />} />
+        <Route exact path='/technology' element={<News setProgress={setProgress} key="technology" url={url} pageSize={pageSize} country={country} category="technology" />} />
+      </Routes>
+    </BrowserRouter>
+  )
 
-          <Route exact path='/sports' element={<News setProgress={this.setProgress} key="sports" url={url} pageSize={pageSize} country={country} category="sports" />} />
-
-          <Route exact path='/technology' element={<News setProgress={this.setProgress} key="technology" url={url} pageSize={pageSize} country={country} category="technology" />} />
-        </Routes>
-      </BrowserRouter>
-    )
-  }
 }
 
 
