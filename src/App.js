@@ -21,7 +21,7 @@ export default class App extends Component {
   }
   render() {
     const pageSize = 6;
-    const apiKey = "2f37214f41cc4da8ab2fbb84ca2e748f"
+    const apiKey = process.env.REACT_APP_NEWS_API
     let country = 'in';
     let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}&pageSize=${pageSize}`
     return (
